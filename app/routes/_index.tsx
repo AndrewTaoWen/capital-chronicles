@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
   return [
@@ -7,10 +8,17 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+// Loader function to handle the redirect
+export const loader: LoaderFunction = async () => {
+  // Perform the redirect to the /home route
+  throw redirect("/home");
+};
+
 export default function Index() {
+  
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Remix</h1>
+      <h1>capital chronicles</h1>
       <ul>
         <li>
           <a

@@ -1,0 +1,94 @@
+@keyframes reveal {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+.reveal-animation {
+    animation-name: reveal;
+    animation-fill-mode: forwards;
+    animation-duration: 2s;
+    white-space: nowrap;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.fadeInUp {
+    animation-name: fadeInUp;
+}
+
+/* Define delays for each line, you can add more as per your requirement */
+.delay-1 {
+    animation-delay: 0.5s;
+}
+
+.delay-2 {
+    animation-delay: 1s;
+}
+
+.delay-3 {
+    animation-delay: 1.5s;
+}
+
+/* Add as many delays as you need */
+
+/* Ensure the animation runs only once and the element stays visible after animating */
+.animated-once {
+    animation-fill-mode: both;
+    animation-duration: 0.8s;
+    /* Adjust the duration as needed */
+}
+
+.text-outline {
+    -webkit-text-stroke: 2px black;
+    text-stroke: 2px black;
+    /* This will only work in browsers that support the non-prefixed property */
+}
+
+.text-outline-thin {
+    -webkit-text-stroke: 0.5px black;
+    text-stroke: 0.5px black;
+    /* This will only work in browsers that support the non-prefixed property */
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.slide-in-left {
+    animation: slideInFromLeft 1s forwards;
+}
+
+.slide-in-right {
+    animation: slideInFromRight 1s forwards;
+}
