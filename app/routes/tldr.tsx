@@ -3,16 +3,17 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import OpenAI from "openai";
 const openai = new OpenAI();
 import axios from 'axios';
+import { useState } from "react";
 
 const BING_API_KEY = process.env.BING_API_KEY;
 
-async function summarizeArticlesContent(description) {
+async function completeContent(description: string) {
     const summary = await openai.completions.create({
         model: 'gpt-3.5-turbo-instruct',
         max_tokens: 2048,
-        prompt: `Summarize the following information in one concise sentence without repeating any details: ${description}`
+        prompt: `This is a framented description sentence for a news article: ${description},
+                please give just a completed sentence, thank you.`
     });
-    console.log(summary.choices[0].text);
     return summary.choices[0].text;
 }
 
@@ -29,8 +30,8 @@ async function fetchTopArticles(count = 5) {
             // Use Promise.all to wait for all promises to resolve
             const articles = await Promise.all(response.data.value.map(async (article) => {
                 const description = article.description || '';
-                const sum_description = await summarizeArticlesContent(description);
-                // console.log(sum_description)
+                const sum_description = await completeContent(description);
+                console.log(sum_description)
 
                 return {
                     id: article.id,
@@ -62,6 +63,12 @@ export async function loader() {
 
 export default function tldr() {
 
+    const [selectedArticleId, setSelectedArticleId] = useState(null);
+
+    const handleClick = (id) => {
+        setSelectedArticleId(id);
+    };
+
     const articles = useLoaderData();
 
     return (
@@ -72,10 +79,14 @@ export default function tldr() {
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#fff]"></span>
                 </div>
             </div>
-            <div className="w-1/3 -skew-x-[12deg] bg-[#d8bba3]">
-                <ul className="mx-8 mt-8 list-disc">
+            <div className="mx-16 my-4 w-1/3 bg-[#d8bba3]">
+                <ul className="mx-8 my-8 list-disc">
                     {articles && articles.length > 0 && articles.map((article, index) => (
-                        <li className={`mb-4 animated-once fadeInUp delay-${index + 1}`} key={article.id}>
+                        <li
+                            className={`my-4 animated-once fadeInUp delay-${index + 1} ${article.id === selectedArticleId ? 'bg-yellow-300' : ''}`}
+                            key={article.id}
+                            onClick={() => handleClick(article.id)}
+                        >
                             <a className="font-semibold group decoration-blue-50 transition duration-300 text-white" href={article.link}>{article.title}
                                 <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#fff]"></span>
                             </a>
@@ -83,6 +94,9 @@ export default function tldr() {
                         </li>
                     ))}
                 </ul>
+                <div>
+
+                </div>
             </div>
         </>
 

@@ -3,8 +3,23 @@ import type { LinksFunction } from "@remix-run/node"; // or cloudflare/deno
 import axios from 'axios';
 import React, { useLayoutEffect, useEffect, useState, useRef } from 'react';
 import useWindowDimensions from "./window_dimensions";
+import OpenAI from "openai";
+const openai = new OpenAI();
 
 const API_KEY = process.env.BING_API_KEY;
+
+async function completeContent(description : string) {
+    // console.log(description)
+    const summary = await openai.completions.create({
+        model: 'gpt-3.5-turbo-instruct',
+        max_tokens: 2048,
+        prompt: `This is a framented sentence: ${description},
+                please give just the completed the sentence, thank you.`
+    });
+    console.log(summary.choices[0].text)
+    // console.log(summary.choices[0].text);
+    return summary.choices[0].text;
+}
 
 async function fetchTopThreeArticlesInCategory(category) {
     const API_ENDPOINT = `https://api.bing.microsoft.com/v7.0/news/search?q=${category}&count=3&mkt=en-US`;
@@ -18,14 +33,17 @@ async function fetchTopThreeArticlesInCategory(category) {
         });
 
         if (response.data && response.data.value && response.data.value.length > 0) {
-            // console.log(response.data.value)
-            return response.data.value.map(article => ({
-                id: article.id,
-                title: article.name,
-                link: article.url,
-                description: article.description,
-                provider: article.provider
+            return Promise.all(response.data.value.map(async (article) => {
+                const completedDescription = await completeContent(article.description);
+                return {
+                    id: article.id,
+                    title: article.name,
+                    link: article.url,
+                    description: completedDescription,
+                    provider: article.provider
+                };
             }));
+            
         }
     } catch (error) {
         console.error('Error fetching articles:', error);
