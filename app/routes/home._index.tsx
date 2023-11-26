@@ -17,13 +17,11 @@ async function completeContent(description : string) {
                 please give just the completed the sentence, thank you.`
     });
     console.log(summary.choices[0].text)
-    // console.log(summary.choices[0].text);
     return summary.choices[0].text;
 }
 
-async function fetchTopThreeArticlesInCategory(category) {
-    const API_ENDPOINT = `https://api.bing.microsoft.com/v7.0/news/search?q=${category}&count=3&mkt=en-US`;
-
+async function fetchTopArticlesInCategory(category : string) {
+    const API_ENDPOINT = `https://api.bing.microsoft.com/v7.0/news/search?q=${category}&count=6&mkt=en-US`;
 
     try {
         const response = await axios.get(API_ENDPOINT, {
@@ -33,7 +31,7 @@ async function fetchTopThreeArticlesInCategory(category) {
         });
 
         if (response.data && response.data.value && response.data.value.length > 0) {
-            return Promise.all(response.data.value.map(async (article) => {
+            return Promise.all(response.data.value.map(async (article : any) => {
                 const completedDescription = await completeContent(article.description);
                 return {
                     id: article.id,
@@ -52,22 +50,22 @@ async function fetchTopThreeArticlesInCategory(category) {
 }
 
 export async function loader() {
-    const fi = await fetchTopThreeArticlesInCategory("finance");
-    const ai = await fetchTopThreeArticlesInCategory("artificial intelligence");
-    return { fi, ai };
+    const data = await fetchTopArticlesInCategory("finance");
+    let data_left = data?.slice(0,3);
+    let data_right = data?.slice(3);
+    return { data_left, data_right };
 }
 
 
 export default function HomeIndex() {
-    const data = useLoaderData();
-
+    const data : any = useLoaderData();
 
     return (
         <main className="bg-[#c79d7a] border-solid rounded-bl-lg rounded-br-lg">
             <div className="flex space-x-4 place-content-evenly decoration-white">
                 <div className="w-1/3 -skew-x-[12deg] bg-[#d8bba3]">
                     <ul className="mx-8 mt-8 list-disc">
-                        {data.fi && data.fi.length > 0 && data.fi.map((article, index) => (
+                        {data.data_left && data.data_left.length > 0 && data.data_left.map((article : any, index : number) => (
                             <li className={`mb-4 animated-once fadeInUp delay-${index + 1}`} key={article.id}>
                                 <a className="font-semibold group decoration-blue-50 transition duration-300 text-white" href={article.link}>{article.title}
                                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#fff]"></span>
@@ -102,7 +100,7 @@ export default function HomeIndex() {
 
                 <div className="w-1/3 -skew-x-[12deg] bg-[#e9d5c4]">
                     <ul className="mt-8 mx-8 list-disc">
-                        {data.ai && data.ai.length > 0 && data.ai.map((article, index) => (
+                        {data.data_right && data.data_right.length > 0 && data.data_right.map((article : any, index : number) => (
                             <li className={`mb-4 animated-once fadeInUp delay-${index + 1}`} key={article.id}>
                                 <a className="font-semibold group decoration-blue-50 transition duration-300 text-white" href={article.link}>{article.title}
                                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#fff]"></span>
