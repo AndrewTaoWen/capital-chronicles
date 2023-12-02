@@ -1,10 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  mode: 'jit',
   content: ["./app/**/*.{js,ts,tsx,jsx}"],
-  purge: [
-    './app/**/*.{js,jsx,ts,tsx,vue}',
-  ],
   theme: {
     extend: {
       fontFamily: {

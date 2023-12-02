@@ -79,19 +79,12 @@ export default function HomeIndex() {
 
                 <div className="w-1/6 -skew-x-[12deg] flex flex-col justify-center items-center">
                     <div className="text-center">
-                        <a className="font-semibold group decoration-blue-50 transition duration-300 text-white slide-in-left text-5xl" href="/tldr">
+                        <a className="font-semibold group decoration-blue-50 transition duration-300 text-white slide-in-left text-5xl" href="/visual">
                             Today's
                             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#fff]"></span>
                         </a>
-                        <a className="font-semibold group decoration-blue-50 transition duration-300 text-white slide-in-right text-5xl" href="/tldr">
-                            tldr
-                            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#fff]"></span>
-                        </a>
-                    </div>
-
-                    <div className="text-center mt-6">
-                        <a className="font-semibold group decoration-blue-50 transition duration-300 text-white slide-in-left text-5xl" href="/tldr">
-                            Your local stories!
+                        <a className="font-semibold group decoration-blue-50 transition duration-300 text-white slide-in-right text-5xl" href="/visual">
+                            Visualized
                             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#fff]"></span>
                         </a>
                     </div>
