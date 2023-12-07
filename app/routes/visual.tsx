@@ -4,11 +4,6 @@ import OpenAI from "openai";
 const openai = new OpenAI();
 import axios from 'axios';
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
-import popUp from "./popupmodal";
-import Select from "react-select"
 
 const BING_API_KEY = process.env.BING_API_KEY;
 
@@ -68,7 +63,7 @@ export async function loader() {
 }
 
 
-export default function tldr() {
+export default function visual() {
 
     const [selectedArticleId, setSelectedArticleId] = useState(-1);
     const [modalOpen, setModalOpen] = useState(false);
@@ -90,18 +85,8 @@ export default function tldr() {
 
     return (
         <>
-            <div className="font-raleway mx-16 mt-16 border-solid rounded-lg bg-[#f7e7da]">
-                <div className="flex justify-center ml-8 mt-8 overflow-hidden">
-                    <span className="text-6xl font-bold	my-4 reveal-animation block text-[#c79d7a] text-outline">Today's TLDR</span>
-                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#fff]"></span>
-                    <div className="h-full flex items-center justify-center mt-5">
-                        <a href="/home" className="text-black font-bold">Go to Home</a>
-                    </div>
-                </div>
-            </div>
-
             <div className="mx-16 my-4 bg-[#d8bba3] border-solid rounded-lg flex">
-            <div className="w-1/2">
+                <div className="w-1/2">
                     <ul className="my-8 mx-8 list-none">
                         {firstHalf && firstHalf.length > 0 && firstHalf.map((article, index) => (
                             <li
@@ -138,33 +123,6 @@ export default function tldr() {
                     </ul>
                 </div>
             </div>
-            <div className="font-raleway mx-16 border-solid border-[#d8bba3] rounded-lg bg-[#d2ad8e] mb-4">
-                <div className="flex justify-center ml-8 mt-8 overflow-hidden">
-                    <div className="text-2xl my-4 block reveal-animation">
-                        <span className="font-bold italic text-black">Capital Chronicles </span>
-                        <span className="normal-case">by </span>
-                        <span className="font-thin text-white">Andrew & Jonathan Wen</span>
-                    </div>
-                </div>
-                <div className="flex items-center ml-16">
-                    <FontAwesomeIcon className="h-4 w-4" icon={faEnvelope} />
-                    <span className="ml-2">Andrew Wen :</span>
-                    <a className="ml-2 font-semibold group decoration-blue-50 transition duration-300" href="mailto:a3wen@uwaterloo.ca">
-                        a3wen@uwaterloo.ca
-                        <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#fff]"></span>
-                    </a>
-                </div>
-                <div className="flex items-center ml-16 mb-4">
-                    <FontAwesomeIcon className="h-4 w-4" icon={faEnvelope} />
-                    <span className="ml-2">Jonathan Wen :</span>
-                    <a className="ml-2 font-semibold group decoration-blue-50 transition duration-300" href="mailto:boywen.study@gmail.com">
-                        boywen.study@gmail.com
-                        <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#fff]"></span>
-                    </a>
-                </div>
-                <div className="h-4"></div>
-            </div>
-            {modalOpen && (<popUp />)}
         </>
 
     )
