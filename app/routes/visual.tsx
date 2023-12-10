@@ -4,13 +4,26 @@ import ArticlesContext from './context';
 import generateImages from "./generateImage.server";
 import { useEffect, useState } from "react";
 
+const image_placeholder = {
+    created: 1702245926,
+    data: [
+      { // placeholder
+        url: -1      
+    }
+    ]
+}
+
 export async function loader() {
-    let articles = await fetchTopArticlesInCategory("finance", 10);
+    let articles = await fetchTopArticlesInCategory("finance", 5);
 
     for (let i = 0; i < articles.length; i++) {
         const prompt = articles[i].title + articles[i].description;
-        // const img = await generateImages(prompt, 1);
-        // articles[i].image = img;
+        const img = await generateImages(prompt, 1);
+        if (img.status === 429) {
+            articles[i].image = image_placeholder
+        } else {
+            articles[i].image = img;
+        }
     }
 
     return articles;
@@ -33,7 +46,11 @@ export default function visual() {
     return (
         <>
             {isLoading ? (
-                <div className="loader">Loading...</div> // Add your custom loading animation here
+                <div className="loader flex flex-col items-center justify-center">Loading...
+                    <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                </div> // Add your custom loading animation here
             ) : (
                 <ArticlesContext.Provider value={articles}>
                     <div className="font-raleway mx-16 my-4 bg-[#d8bba3] border-solid rounded-lg flex">
