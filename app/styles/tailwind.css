@@ -2,34 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-#sidebar nav a.active span {
-  color: inherit;
-}
-
-#sidebar nav .active i {
-  color: inherit;
-}
-
-#sidebar nav a.active {
-  background: hsl(224, 98%, 58%);
-  color: white;
-}
-
-button:active {
-  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.4);
-  transform: translateY(1px);
-}
-
-#sidebar nav a:hover {
-  background: #e3e3e3;
-}
-
-
-#sidebar nav a.pending {
-  animation: progress 2s infinite ease-in-out;
-  animation-delay: 200ms;
-}
-
 @keyframes reveal {
   from {
     width: 0;
