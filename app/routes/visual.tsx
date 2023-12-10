@@ -15,20 +15,19 @@ export default function visual() {
     return (
         <>
             <ArticlesContext.Provider value={articles}>
-                <div className="mx-16 my-4 bg-[#d8bba3] border-solid rounded-lg flex">
+                <div className="font-raleway mx-16 my-4 bg-[#d8bba3] border-solid rounded-lg flex">
                     <div className="w-1/2">
                         <ul className="my-8 mx-8 list-none">
                             {articles && articles.length > 0 && articles.map((article, index) => (
                                 <li
-                                    className={`my-4 mx-4 border-solid rounded-lg bg-[#f7e7da] animated-once fadeInUp`}
+                                    className={`my-4 mx-4 border-solid rounded-lg bg-[#f7e7da] animated-once fadeInUp hover:bg-[#fff]`}
                                     style={{ animationDelay: `${(index + 1) * 0.15}s` }}
                                     key={article.id} // Unique key for each list item
                                 >
-                                    <div className="my-1 mx-1">
+                                    <div className="my-1 mx-1 font-bold">
                                         <NavLink to={`/visual/${index}`}>
                                             {article.title}
                                         </NavLink>
-                                        
                                     </div>
                                 </li>
                             ))}
