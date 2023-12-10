@@ -16,33 +16,18 @@ export async function loader() {
 
 export default function visual() {
 
-    const [selectedArticleId, setSelectedArticleId] = useState(-1);
-    const [modalOpen, setModalOpen] = useState(false);
-
-    const handleClick = (id: any) => {
-        console.log(id, "clicked")
-        setSelectedArticleId(id);
-    };
 
     let articles: any[] = useLoaderData();
-    const firstHalf: any[] = articles.slice(0, 5);
-    const secondHalf: any[] = articles.slice(6, 11);
-
-    useEffect(() => {
-        if (selectedArticleId !== -1) {
-            setModalOpen(true);
-        }
-    }, [selectedArticleId])
 
     return (
         <>
             <div className="mx-16 my-4 bg-[#d8bba3] border-solid rounded-lg flex">
                 <div className="w-1/2">
                     <ul className="my-8 mx-8 list-none">
-                        {firstHalf && firstHalf.length > 0 && firstHalf.map((article, index) => (
+                        {articles && articles.length > 0 && articles.map((article, index) => (
                             <li
-                                onClick={handleClick}
-                                className={`my-4 mx-4 border-solid rounded-lg bg-[#f7e7da] animated-once fadeInUp delay-${index + 1}`}
+                                className={`my-4 mx-4 border-solid rounded-lg bg-[#f7e7da] animated-once fadeInUp`}
+                                style={{animationDelay: `${(index + 1) * 0.25}s`}}
                                 key={article.id} // Unique key for each list item
                             >
                                 <div className="my-1 mx-1">
@@ -56,22 +41,7 @@ export default function visual() {
                     </ul>
                 </div>
                 <div className="w-1/2">
-                    <ul className="my-8 mx-8 list-none">
-                        {secondHalf && secondHalf.length > 0 && secondHalf.map((article, index) => (
-                            <li
-                                onClick={handleClick}
-                                className={`my-4 mx-4 border-solid rounded-lg bg-[#f7e7da] animated-once fadeInUp delay-${index + 1}`}
-                                key={article.id} // Unique key for each list item
-                            >
-                                <div className="my-1 mx-1">
-                                    <a className="font-semibold group decoration-blue-50 transition duration-300 text-white" href={article.url}>{article.title}
-                                        <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-[#fff]"></span>
-                                    </a>
-                                    <p className="decoration-white">{article.description}</p>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                    
                 </div>
             </div>
         </>
