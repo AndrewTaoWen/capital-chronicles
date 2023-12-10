@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+#sidebar nav a.active span {
+  color: inherit;
+}
+
+#sidebar nav .active i {
+  color: inherit;
+}
+
+#sidebar nav a.active {
+  background: hsl(224, 98%, 58%);
+  color: white;
+}
+
+button:active {
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.4);
+  transform: translateY(1px);
+}
+
+#sidebar nav a:hover {
+  background: #e3e3e3;
+}
+
+
+#sidebar nav a.pending {
+  animation: progress 2s infinite ease-in-out;
+  animation-delay: 200ms;
+}
 
 @keyframes reveal {
   from {
@@ -34,28 +61,6 @@
 
 .fadeInUp {
   animation-name: fadeInUp;
-}
-
-/* Define delays for each line, you can add more as per your requirement */
-
-.delay-1 {
-  animation-delay: 0.5s;
-}
-
-.delay-2 {
-  animation-delay: 1s;
-}
-
-.delay-3 {
-  animation-delay: 1.5s;
-}
-
-.delay-4 {
-  animation-delay: 2s;
-}
-
-.delay-5 {
-  animation-delay: 2.5s;
 }
 
 /* Add as many delays as you need */

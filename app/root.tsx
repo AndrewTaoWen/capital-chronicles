@@ -14,7 +14,7 @@ import {
 import "@fontsource/raleway/400.css"; // Weight 400.
 
 import styles from './styles/tailwind.css'
-import fetchTopArticlesInCategory from "./routes/articles/chatgptapi.server";
+import fetchTopArticlesInCategory from "./routes/chatgptapi.server";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
@@ -26,13 +26,6 @@ export function links() {
 export const action = async () => {
   return redirect(`/home`);
 };
-
-
-export async function loader(request: string) {
-  const prompt = 'Your prompt for ChatGPT here';
-  const chatGptResponse = await fetchTopArticlesInCategory(prompt);
-  return json({ chatGptResponse });
-}
 
 
 export default function App() {
