@@ -12,22 +12,18 @@ export default async function generateImages(description : string, numImages : n
         'Content-Type': 'application/json',
     };
 
-    const body = {
-        model: "dall-e-3",
-        description,
-        n: numImages,
-        size: "1024x1024",
-    };
-
     try {
         const response = await openai.images.generate({
-            model: "dall-e-3",
-            prompt: "a white siamese cat",
+            model: "dall-e-2",
+            prompt: `Here is the title of a news article followed by a short description: ${description}, 
+            please provide me with images that can describe the news story`,
             n: 1,
-            size: "1024x1024",
+            size: "512x512",
           });
         console.log(response);
+        return response;
     } catch (error) {
         console.error('Error generating images:', error);
+        return -1;
     }
 }
