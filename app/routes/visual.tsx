@@ -20,7 +20,6 @@ export default function visual() {
 
     let articles = useLoaderData();
 
-
     return (
         <>
             <ArticlesContext.Provider value={articles}>
@@ -31,7 +30,7 @@ export default function visual() {
                                 <li
                                     className={`my-4 mx-4 border-solid rounded-lg bg-[#f7e7da] animated-once fadeInUp hover:bg-[#fff]`}
                                     style={{ animationDelay: `${(index + 1) * 0.15}s` }}
-                                    key={article.id} // Unique key for each list item
+                                    key={article.id} 
                                 >
                                     <div className="my-1 mx-1 font-bold">
                                         <NavLink to={`/visual/${index}`}>

@@ -1,7 +1,6 @@
 import { Link, NavLink, Outlet, useLoaderData, useNavigate } from "@remix-run/react";
 import React, { useContext, useEffect, useState } from 'react';
 import ArticlesContext from './context';
-import generateImages from "./generateImage.server";
 
 
 export async function loader({ request }) {
