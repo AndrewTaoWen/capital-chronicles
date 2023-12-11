@@ -4,26 +4,13 @@ import ArticlesContext from './context';
 import generateImages from "./generateImage.server";
 import { useEffect, useState } from "react";
 
-const image_placeholder = {
-    created: 1702245926,
-    data: [
-      { // placeholder
-        url: -1      
-    }
-    ]
-}
-
 export async function loader() {
     let articles = await fetchTopArticlesInCategory("finance", 5);
 
     for (let i = 0; i < articles.length; i++) {
         const prompt = articles[i].title + articles[i].description;
         const img = await generateImages(prompt, 1);
-        if (img.status === 429) {
-            articles[i].image = image_placeholder
-        } else {
-            articles[i].image = img;
-        }
+        articles[i].image = img;
     }
 
     return articles;

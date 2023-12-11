@@ -8,9 +8,14 @@ export const loader = async ({
   request,
 }: LoaderFunctionArgs) => {
   const data = await fetchTopArticlesInCategory("finance", 6);
+
+  let prompt = "Help me generate a slanted logo for my finance blog, capital chronicles";
+
+  const img = await generateImages(prompt, 1);
+
   let data_left = data?.slice(0, 3);
   let data_right = data?.slice(3);
-  return { data_left, data_right };
+  return { data_left, data_right, img };
 }
 
 
@@ -38,6 +43,14 @@ export default function Index() {
 
         <div className="w-1/6 -skew-x-[12deg] flex flex-col justify-center items-center">
           <div className="text-center">
+            {data.img.data ? (
+              <>
+                <img className="max-w-full max-h-full mb-2" src={data.img.data[0].url} alt="Article Image" />
+                <h1 className="font-bold">AI Generated Logo (Powered by DALL-E)</h1>
+              </>
+            ) : (
+              <h1 className="font-bold">Currently, image generation quota has been exceeded, please check back again later.</h1>
+            )}
           </div>
         </div>
 

@@ -20,7 +20,6 @@ export default async function generateImages(description : string, numImages : n
             n: 1,
             size: "512x512",
           });
-        console.log(response);
         return response;
     } catch (error) {
         console.error('Error generating images:', error);
