@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet, useLoaderData, useNavigate } from "@remix-run/react";
+import { Link, NavLink, Outlet, useLoaderData, useNavigate, useNavigation } from "@remix-run/react";
 import fetchTopArticlesInCategory from "./chatgptapi.server";
 import ArticlesContext from './context';
 import generateImages from "./generateImage.server";
@@ -20,14 +20,10 @@ export default function visual() {
 
     let articles = useLoaderData();
 
-    const [isLoading, setIsLoading] = useState(true);
+    const navigation = useNavigation();
+    const isLoading = navigation.state === 'loading';
 
-    useEffect(() => {
-        if (articles) {
-            setIsLoading(false);
-        }
-    }, [articles]);
-
+    
     if (isLoading) {
         return (
           <div className="flex justify-center items-center h-screen">

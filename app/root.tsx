@@ -1,5 +1,4 @@
-import { cssBundleHref } from "@remix-run/css-bundle";
-import { json, redirect, type LinksFunction, type LoaderFunctionArgs } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import {
   Link,
   Links,
@@ -8,16 +7,15 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useHref,
   useLoaderData,
+  useNavigation,
 } from "@remix-run/react";
 import "@fontsource/raleway/400.css"; // Weight 400.
 
 import styles from './styles/tailwind.css'
-import fetchTopArticlesInCategory from "./routes/chatgptapi.server";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import GlobalLoader from "./routes/loading";
 
 export function links() {
   return [{ rel: 'stylesheet', href: styles }]
@@ -30,7 +28,8 @@ export const action = async () => {
 
 export default function App() {
   const articles = useLoaderData();
-  const [page, setPage] = useState("home");
+  const navigation = useNavigation();
+  const isLoading = navigation.state === 'loading';
 
   return (
     <html lang="en">
@@ -51,6 +50,7 @@ export default function App() {
         </nav>
       </div>
       <body>
+        {isLoading && <GlobalLoader />}
         <Outlet />
         <ScrollRestoration />
         <Scripts />
