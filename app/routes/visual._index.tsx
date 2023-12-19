@@ -1,8 +1,5 @@
 import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
-import OpenAI from "openai";
-import fetchTopArticlesInCategory from "./chatgptapi.server";
-import generateImages from "./generateImage.server"
 
 export const loader = async ({
   request,

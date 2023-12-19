@@ -39,7 +39,8 @@ export default async function fetchTopArticlesInCategory(category : string, numA
                     title: article.name,
                     link: article.url,
                     description: completedDescription,
-                    provider: article.provider
+                    provider: article.provider,
+                    image: null
                 };
             }));
             

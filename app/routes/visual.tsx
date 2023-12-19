@@ -1,14 +1,22 @@
-import { Link, NavLink, Outlet, useLoaderData, useNavigate } from "@remix-run/react";
+import { Link, NavLink, Outlet, useLoaderData, useNavigate, useNavigation } from "@remix-run/react";
 import fetchTopArticlesInCategory from "./chatgptapi.server";
 import ArticlesContext from './context';
+import generateImages from "./generateImage.server";
+import { useEffect, useState } from "react";
 
 export async function loader() {
-    const articles = fetchTopArticlesInCategory("finance", 10);
+    let articles = await fetchTopArticlesInCategory("finance", 5);
+
+    for (let i = 0; i < articles.length; i++) {
+        const prompt = articles[i].title + articles[i].description;
+        const img = await generateImages(prompt, 1);
+        articles[i].image = img;
+    }
+
     return articles;
 }
 
 export default function visual() {
-
 
     let articles = useLoaderData();
 
@@ -22,7 +30,7 @@ export default function visual() {
                                 <li
                                     className={`my-4 mx-4 border-solid rounded-lg bg-[#f7e7da] animated-once fadeInUp hover:bg-[#fff]`}
                                     style={{ animationDelay: `${(index + 1) * 0.15}s` }}
-                                    key={article.id} // Unique key for each list item
+                                    key={article.id} 
                                 >
                                     <div className="my-1 mx-1 font-bold">
                                         <NavLink to={`/visual/${index}`}>
@@ -38,8 +46,6 @@ export default function visual() {
                     </div>
                 </div>
             </ArticlesContext.Provider>
-
         </>
-
     )
 }
