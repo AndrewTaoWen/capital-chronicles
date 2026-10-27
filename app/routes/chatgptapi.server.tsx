@@ -20,7 +20,6 @@ async function completeContent(description : string) {
 
 
 export default async function fetchTopArticlesInCategory(category : string, numArticles : number) {
-    console.log("API Key:", process.env.OPENAI_API_KEY);
 
     const API_ENDPOINT = `https://api.bing.microsoft.com/v7.0/news/search?q=${category}&count=${numArticles}&mkt=en-US`;
 
